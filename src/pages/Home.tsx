@@ -22,14 +22,37 @@ export const Home: React.FC = () => {
 
   const featuredListings = catalogueListings.filter((l) => l.featured);
 
-  const handleReadMore = (listing: CarListing) => { setSelectedListing(listing); setModalOpen(true); };
-  const handleCloseModal = () => { setSelectedListing(null); setModalOpen(false); };
+  const handleReadMore = (listing: CarListing) => { 
+    setSelectedListing(listing); 
+    setModalOpen(true); 
+  };
+  
+  const handleCloseModal = () => { 
+    setSelectedListing(null); 
+    setModalOpen(false); 
+  };
 
   const featuresList = [
-    { icon: <VerifiedIcon sx={{ fontSize: 40, color: 'primary.main' }} />, title: '3-Year Manufacturer Warranty', desc: 'All brand new vehicles sold through CFAO Toyota Zimbabwe include a comprehensive 3-year or 100,000 km warranty for absolute peace of mind.' },
-    { icon: <SettingsIcon sx={{ fontSize: 40, color: 'primary.main' }} />, title: '100% Genuine Spare Parts', desc: 'Protect your engine and safety. We use and distribute exclusively official Toyota components imported directly from the manufacturer.' },
-    { icon: <HandymanIcon sx={{ fontSize: 40, color: 'primary.main' }} />, title: 'Certified Master Technicians', desc: 'Our workshops are staffed by expert technicians trained extensively under the official global Toyota Service training standards.' },
-    { icon: <BusinessIcon sx={{ fontSize: 40, color: 'primary.main' }} />, title: 'Official CFAO Network', desc: 'As an authorized distributor, we offer full coverage, customer support, and vehicle recalls, protecting your investment long-term.' },
+    { 
+      icon: <VerifiedIcon sx={{ fontSize: 40, color: 'primary.main' }} />, 
+      title: '3-Year Manufacturer Warranty', 
+      desc: 'All brand new vehicles sold through CFAO Toyota Zimbabwe include a comprehensive 3-year or 100,000 km warranty for absolute peace of mind.' 
+    },
+    { 
+      icon: <SettingsIcon sx={{ fontSize: 40, color: 'primary.main' }} />, 
+      title: '100% Genuine Spare Parts', 
+      desc: 'Protect your engine and safety. We use and distribute exclusively official Toyota components imported directly from the manufacturer.' 
+    },
+    { 
+      icon: <HandymanIcon sx={{ fontSize: 40, color: 'primary.main' }} />, 
+      title: 'Certified Master Technicians', 
+      desc: 'Our workshops are staffed by expert technicians trained extensively under the official global Toyota Service training standards.' 
+    },
+    { 
+      icon: <BusinessIcon sx={{ fontSize: 40, color: 'primary.main' }} />, 
+      title: 'Official CFAO Network', 
+      desc: 'As an authorized distributor, we offer full coverage, customer support, and vehicle recalls, protecting your investment long-term.' 
+    },
   ];
 
   return (
@@ -49,11 +72,14 @@ export const Home: React.FC = () => {
               </Typography>
             </Grid>
             <Grid size={{ xs: 12, md: 8 }}>
-              <Stack
-                direction="row"
-                flexWrap="wrap"
-                gap={1.5}
-                sx={{ justifyContent: { xs: 'flex-start', md: 'flex-end' } }}
+              <Box
+                sx={{ 
+                  display: 'flex',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  gap: 1.5,
+                  justifyContent: { xs: 'flex-start', md: 'flex-end' }
+                }}
               >
                 {[
                   { label: 'SUVS', path: '/vehicles?category=SUV' },
@@ -66,15 +92,32 @@ export const Home: React.FC = () => {
                     to={btn.path}
                     variant="outlined"
                     size="small"
-                    sx={{ color: 'black', borderColor: 'rgba(0,0,0,0.15)', borderRadius: '7px', whiteSpace: 'nowrap', '&:hover': { borderColor: 'primary.main', bgcolor: 'primary.main', color: 'white' } }}
+                    sx={{ 
+                      color: 'black', 
+                      borderColor: 'rgba(0,0,0,0.15)', 
+                      borderRadius: '7px', 
+                      whiteSpace: 'nowrap', 
+                      '&:hover': { 
+                        borderColor: 'primary.main', 
+                        bgcolor: 'primary.main', 
+                        color: 'white' 
+                      } 
+                    }}
                   >
                     {btn.label}
                   </Button>
                 ))}
-                <Button component={Link} to="/vehicles" variant="contained" color="primary" size="small" sx={{ borderRadius: '7px', whiteSpace: 'nowrap' }}>
+                <Button 
+                  component={Link} 
+                  to="/vehicles" 
+                  variant="contained" 
+                  color="primary" 
+                  size="small" 
+                  sx={{ borderRadius: '7px', whiteSpace: 'nowrap' }}
+                >
                   ALL MODELS
                 </Button>
-              </Stack>
+              </Box>
             </Grid>
           </Grid>
         </Container>
@@ -92,7 +135,12 @@ export const Home: React.FC = () => {
                 FEATURED TOYOTA LINEUP
               </Typography>
             </Box>
-            <Button component={Link} to="/vehicles" endIcon={<ArrowForwardIcon />} sx={{ fontWeight: 700, borderRadius: '7px', '&:hover': { color: 'primary.main', bgcolor: 'transparent' } }}>
+            <Button 
+              component={Link} 
+              to="/vehicles" 
+              endIcon={<ArrowForwardIcon />} 
+              sx={{ fontWeight: 700, borderRadius: '7px', '&:hover': { color: 'primary.main', bgcolor: 'transparent' } }}
+            >
               VIEW ENTIRE CATALOG
             </Button>
           </Box>
@@ -138,8 +186,20 @@ export const Home: React.FC = () => {
             Ensure the durability, safety, and official resale value of your vehicle. Book an appointment today at our Harare or Bulawayo workshops for certified maintenance, oil changes, engine diagnostics, or genuine filter replacements.
           </Typography>
           <Box>
-            <Button component={Link} to="/services" variant="contained" color="secondary" size="large"
-              sx={{ py: 1.5, px: 4, fontWeight: 800, bgcolor: 'black', borderRadius: '7px', '&:hover': { bgcolor: '#222222' } }}
+            <Button 
+              component={Link} 
+              to="/services" 
+              variant="contained" 
+              color="secondary" 
+              size="large"
+              sx={{ 
+                py: 1.5, 
+                px: 4, 
+                fontWeight: 800, 
+                bgcolor: 'black', 
+                borderRadius: '7px', 
+                '&:hover': { bgcolor: '#222222' } 
+              }}
             >
               BOOK A SERVICE NOW
             </Button>
@@ -162,7 +222,14 @@ export const Home: React.FC = () => {
           <Grid container spacing={{ xs: 2, md: 4 }}>
             {featuresList.map((item, idx) => (
               <Grid size={{ xs: 12, sm: 6, md: 3 }} key={idx}>
-                <Card sx={{ height: '100%', border: '1px solid #EAEAEA', borderRadius: '16px', boxShadow: 'none', transition: 'none', '&:hover': { transform: 'none', boxShadow: 'none' } }}>
+                <Card sx={{ 
+                  height: '100%', 
+                  border: '1px solid #EAEAEA', 
+                  borderRadius: '16px', 
+                  boxShadow: 'none', 
+                  transition: 'none', 
+                  '&:hover': { transform: 'none', boxShadow: 'none' } 
+                }}>
                   <CardContent sx={{ p: { xs: 3, md: 4 } }}>
                     <Box sx={{ mb: 3 }}>{item.icon}</Box>
                     <Typography variant="h6" sx={{ fontWeight: 800, mb: 2, fontSize: { xs: '1rem', md: '1.25rem' } }}>
@@ -183,4 +250,5 @@ export const Home: React.FC = () => {
     </Box>
   );
 };
+
 export default Home;
