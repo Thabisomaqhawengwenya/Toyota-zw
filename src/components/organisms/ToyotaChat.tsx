@@ -259,8 +259,8 @@ export const ToyotaChat: React.FC = () => {
               display: 'flex', alignItems: 'center', gap: 1.5, flexShrink: 0,
             }}
           >
-            <Box sx={{ width: 38, height: 38, borderRadius: '50%', bgcolor: '#EB0A1E', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <SmartToyIcon sx={{ color: '#FFF', fontSize: 20 }} />
+            <Box sx={{ width: 38, height: 38, borderRadius: '50%', bgcolor: '#FFFFFF', border: '2px solid #EB0A1E', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden' }}>
+              <Box component="img" src="/images/logo.png" alt="Toyota" sx={{ width: 26, height: 26, objectFit: 'contain' }} />
             </Box>
             <Box sx={{ flexGrow: 1, minWidth: 0 }}>
               <Typography sx={{ fontWeight: 800, color: '#FFF', fontSize: '0.875rem', lineHeight: 1.2 }}>
@@ -302,12 +302,13 @@ export const ToyotaChat: React.FC = () => {
                 <Avatar
                   sx={{
                     width: 28, height: 28, flexShrink: 0,
-                    bgcolor: msg.role === 'bot' ? '#EB0A1E' : '#1E1E1E',
+                    bgcolor: msg.role === 'bot' ? '#FFFFFF' : '#1E1E1E',
+                    border: msg.role === 'bot' ? '1.5px solid #EB0A1E' : 'none',
                     mb: 0.25,
                   }}
                 >
                   {msg.role === 'bot'
-                    ? <SmartToyIcon sx={{ fontSize: 15 }} />
+                    ? <Box component="img" src="/images/logo.png" alt="Toyota" sx={{ width: 18, height: 18, objectFit: 'contain' }} />
                     : <PersonIcon sx={{ fontSize: 15 }} />}
                 </Avatar>
 
