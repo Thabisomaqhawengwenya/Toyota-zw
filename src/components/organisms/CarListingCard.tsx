@@ -44,8 +44,8 @@ const SpecPill: React.FC<SpecPillProps> = ({ icon, label, value }) => (
         <Typography
           sx={{
             fontSize: '0.68rem',
-            color: '#888',
-            fontWeight: 500,
+            color: '#6B6B6B',
+            fontWeight: 600,
             lineHeight: 1.1,
             textTransform: 'uppercase',
             letterSpacing: '0.04em',
@@ -99,6 +99,9 @@ export const CarListingCard: React.FC<CarListingCardProps> = ({ listing, onReadM
           component="img"
           src={listing.imageUrl}
           alt={listing.modelName}
+          loading="lazy"
+          width={600}
+          height={400}
           sx={{
             width: '100%',
             height: '100%',
@@ -209,7 +212,7 @@ export const CarListingCard: React.FC<CarListingCardProps> = ({ listing, onReadM
         <Typography
           variant="body2"
           sx={{
-            color: '#6B6C6E',
+            color: '#555759',
             lineHeight: 1.55,
             mb: 2,
             display: '-webkit-box',

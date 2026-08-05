@@ -10,7 +10,7 @@ import CodeIcon from '@mui/icons-material/Code';
 
 export const Footer: React.FC = () => {
   return (
-    <Box sx={{ bgcolor: 'secondary.main', color: '#FFFFFF', pt: 8, pb: 0, mt: 'auto' }}>
+    <Box component="footer" role="contentinfo" sx={{ bgcolor: 'secondary.main', color: '#FFFFFF', pt: 8, pb: 0, mt: 'auto' }}>
       <Container maxWidth="xl">
         <Grid container spacing={4} sx={{ mb: 6 }}>
           {/* Brand Col */}
@@ -152,11 +152,13 @@ export const Footer: React.FC = () => {
             <Typography variant="body2" sx={{ color: '#A0A0A0', mb: 2, lineHeight: 1.7 }}>
               Subscribe to stay updated with official Toyota promotions, vehicle launches, and service specials.
             </Typography>
-            <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', gap: 1 }}>
+            <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', gap: 1 }} aria-label="Newsletter subscription">
               <TextField
                 variant="outlined"
                 size="small"
                 placeholder="Your email address"
+                type="email"
+                slotProps={{ input: { 'aria-label': 'Email address for newsletter' } }}
                 fullWidth
                 sx={{
                   bgcolor: '#FFFFFF',
@@ -173,18 +175,18 @@ export const Footer: React.FC = () => {
 
         {/* Bottom bar */}
         <Box sx={{ py: 3, display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', sm: 'center' }, gap: 2 }}>
-          <Typography variant="caption" sx={{ color: '#555' }}>
+          <Typography variant="caption" sx={{ color: '#888888' }}>
             © {new Date().getFullYear()} Toyota Zimbabwe by CFAO. All rights reserved.
           </Typography>
 
           <Stack direction="row" spacing={3} sx={{ flexWrap: 'wrap' }}>
-            <MuiLink component={Link} to="/privacy-policy" sx={{ color: '#555', textDecoration: 'none', fontSize: '0.72rem', '&:hover': { color: '#FFFFFF' } }}>
+            <MuiLink component={Link} to="/privacy-policy" sx={{ color: '#888888', textDecoration: 'none', fontSize: '0.72rem', '&:hover': { color: '#FFFFFF' } }}>
               Privacy Policy
             </MuiLink>
-            <MuiLink component={Link} to="/terms-of-use" sx={{ color: '#555', textDecoration: 'none', fontSize: '0.72rem', '&:hover': { color: '#FFFFFF' } }}>
+            <MuiLink component={Link} to="/terms-of-use" sx={{ color: '#888888', textDecoration: 'none', fontSize: '0.72rem', '&:hover': { color: '#FFFFFF' } }}>
               Terms of Use
             </MuiLink>
-            <MuiLink component={Link} to="/cookie-preferences" sx={{ color: '#555', textDecoration: 'none', fontSize: '0.72rem', '&:hover': { color: '#FFFFFF' } }}>
+            <MuiLink component={Link} to="/cookie-preferences" sx={{ color: '#888888', textDecoration: 'none', fontSize: '0.72rem', '&:hover': { color: '#FFFFFF' } }}>
               Cookie Preferences
             </MuiLink>
           </Stack>

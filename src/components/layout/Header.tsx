@@ -72,9 +72,9 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      <AppBar position="sticky" elevation={1} sx={{ bgcolor: '#FFFFFF', color: '#000000' }}>
+      <AppBar position="sticky" elevation={1} sx={{ bgcolor: '#FFFFFF', color: '#000000' }} component="header">
         <Container maxWidth="xl">
-          <Toolbar disableGutters sx={{ justifyContent: 'space-between', minHeight: 70 }}>
+          <Toolbar disableGutters sx={{ justifyContent: 'space-between', minHeight: 70 }} component="nav" aria-label="Main navigation">
             {/* Logo */}
             <Typography
               variant="h6"
@@ -104,6 +104,7 @@ export const Header: React.FC = () => {
                 <Button
                   aria-controls="models-menu"
                   aria-haspopup="true"
+                  aria-expanded={Boolean(modelsAnchorEl)}
                   onClick={handleModelsClick}
                   endIcon={<KeyboardArrowDownIcon sx={{ fontSize: '1rem !important', transform: Boolean(modelsAnchorEl) ? 'rotate(180deg)' : 'none', transition: '0.2s' }} />}
                   sx={navButtonSx('/vehicles')}
@@ -137,6 +138,7 @@ export const Header: React.FC = () => {
                 <Button
                   aria-controls="services-menu"
                   aria-haspopup="true"
+                  aria-expanded={Boolean(servicesAnchorEl)}
                   onClick={handleServicesClick}
                   endIcon={<KeyboardArrowDownIcon sx={{ fontSize: '1rem !important', transform: Boolean(servicesAnchorEl) ? 'rotate(180deg)' : 'none', transition: '0.2s' }} />}
                   sx={{
