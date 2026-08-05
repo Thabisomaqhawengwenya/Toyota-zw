@@ -109,7 +109,7 @@ export const mockVehicles: Vehicle[] = [
     id: 'lc76',
     modelName: 'Toyota Land Cruiser 76 Station Wagon',
     category: '4x4',
-    imageUrl: '/images/Toyota_Land Cruiser_76_Station_Wagon.jpeg',
+    imageUrl: '/images/Toyota_Land_Cruiser_76_Station_Wagon.jpeg',
     priceRange: '$68,000 - $78,000',
     fuelType: 'Diesel',
     transmission: 'Manual',
@@ -148,7 +148,7 @@ export const mockVehicles: Vehicle[] = [
     id: 'lc78',
     modelName: 'Toyota Land Cruiser 78 Troop Carrier',
     category: 'LCV',
-    imageUrl: '/images/Toyota_Land Cruiser_78 _Troop_Carrier.jpeg',
+    imageUrl: '/images/Toyota_Land_Cruiser_78_Troop_Carrier.jpeg',
     priceRange: '$70,000 - $79,900',
     fuelType: 'Diesel',
     transmission: 'Manual',
@@ -199,7 +199,7 @@ export const branchLocations = [
     phone: '+263 (24) 2750031 / 9',
     email: 'sales.harare@cfao.com',
     hours: 'Mon - Fri: 8:00 AM - 5:00 PM | Sat: 8:00 AM - 12:00 PM',
-    coordinates: { x: 45, y: 35 }
+    coordinates: { x: 330, y: 110 }
   },
   {
     name: 'CFAO Toyota Bulawayo',
@@ -207,7 +207,7 @@ export const branchLocations = [
     phone: '+263 (29) 2262521 / 5',
     email: 'sales.bulawayo@cfao.com',
     hours: 'Mon - Fri: 8:00 AM - 5:00 PM | Sat: 8:00 AM - 12:00 PM',
-    coordinates: { x: 30, y: 70 }
+    coordinates: { x: 150, y: 270 }
   },
   {
     name: 'Croco Toyota Harare',
@@ -215,7 +215,7 @@ export const branchLocations = [
     phone: '+263 (24) 2772591',
     email: 'sales.croco@croco.co.zw',
     hours: 'Mon - Fri: 8:00 AM - 5:00 PM | Sat: 8:00 AM - 1:00 PM',
-    coordinates: { x: 48, y: 38 }
+    coordinates: { x: 345, y: 125 }
   },
   {
     name: 'Byword Motors (Masvingo Authorized Dealer)',
@@ -223,6 +223,38 @@ export const branchLocations = [
     phone: '+263 (39) 2262704',
     email: 'service.masvingo@byword.co.zw',
     hours: 'Mon - Fri: 8:00 AM - 5:00 PM',
-    coordinates: { x: 55, y: 75 }
+    coordinates: { x: 280, y: 280 }
+  },
+  {
+    name: 'CFAO Toyota Mutare',
+    address: '15 Herbert Chitepo Street, Mutare',
+    phone: '+263 (20) 2061234 / 5',
+    email: 'sales.mutare@cfao.com',
+    hours: 'Mon - Fri: 8:00 AM - 5:00 PM | Sat: 8:00 AM - 12:00 PM',
+    coordinates: { x: 420, y: 155 }
+  },
+  {
+    name: 'CFAO Toyota Gweru',
+    address: '18 Robert Mugabe Way, Gweru',
+    phone: '+263 (54) 2221456',
+    email: 'sales.gweru@cfao.com',
+    hours: 'Mon - Fri: 8:00 AM - 5:00 PM | Sat: 8:00 AM - 12:00 PM',
+    coordinates: { x: 220, y: 195 }
+  },
+  {
+    name: 'CFAO Toyota Kadoma',
+    address: '5 Fourth Street, Kadoma',
+    phone: '+263 (68) 2422150',
+    email: 'sales.kadoma@cfao.com',
+    hours: 'Mon - Fri: 8:00 AM - 5:00 PM',
+    coordinates: { x: 255, y: 155 }
+  },
+  {
+    name: 'Lowveld Toyota (Chiredzi Authorized Dealer)',
+    address: '32 Guava Road, Chiredzi',
+    phone: '+263 (31) 2722801',
+    email: 'sales.chiredzi@lowveld.co.zw',
+    hours: 'Mon - Fri: 8:00 AM - 5:00 PM',
+    coordinates: { x: 340, y: 330 }
   }
 ];

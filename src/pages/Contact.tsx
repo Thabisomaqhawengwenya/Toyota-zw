@@ -17,7 +17,7 @@ export const Contact: React.FC = () => {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
-  const [hoveredBranch, setHoveredBranch] = useState<string | null>(null);
+  const [hoveredBranch, setHoveredBranch] = useState<number | null>(null);
   const [activeBranchIdx, setActiveBranchIdx] = useState<number>(0);
 
   const validateForm = () => {
@@ -90,7 +90,7 @@ export const Contact: React.FC = () => {
               INTERACTIVE DEALER MAP
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
-              Hover over or click the location nodes below to inspect branch details across Zimbabwe.
+              Click or hover on any location dot to view branch details. We now have {branchLocations.length} locations across Zimbabwe.
             </Typography>
 
             <Box
@@ -104,66 +104,46 @@ export const Contact: React.FC = () => {
                 position: 'relative',
               }}
             >
-              {/* Zimbabwe Map SVG Drawing */}
               <Box sx={{ width: '100%', maxWidth: 450 }}>
                 <svg viewBox="0 0 500 400" width="100%" height="100%" style={{ background: '#F9F9F9' }}>
-                  {/* Outer Outline representing stylized Zimbabwe boundary */}
+                  {/* Stylized Zimbabwe boundary */}
                   <path
                     d="M 220 50 C 270 50, 310 30, 350 70 C 400 120, 420 160, 450 180 C 470 200, 450 250, 430 280 C 410 310, 350 350, 300 370 C 250 380, 200 360, 150 330 C 100 300, 60 270, 50 220 C 40 180, 80 140, 110 110 C 140 80, 170 50, 220 50 Z"
                     fill="#E0E0E0"
                     stroke="#B0B0B0"
                     strokeWidth="2"
-                    style={{ transition: 'all 0.5s ease' }}
                   />
+                  {/* Grid lines */}
+                  {[100, 200, 300, 400].map(x => (
+                    <line key={`vl${x}`} x1={x} y1="0" x2={x} y2="400" stroke="#F0F0F0" strokeDasharray="3" />
+                  ))}
+                  {[100, 200, 300].map(y => (
+                    <line key={`hl${y}`} x1="0" y1={y} x2="500" y2={y} stroke="#F0F0F0" strokeDasharray="3" />
+                  ))}
 
-                  {/* SVG Map Grid Lines for stylistic effect */}
-                  <line x1="100" y1="0" x2="100" y2="400" stroke="#F0F0F0" strokeDasharray="3" />
-                  <line x1="200" y1="0" x2="200" y2="400" stroke="#F0F0F0" strokeDasharray="3" />
-                  <line x1="300" y1="0" x2="300" y2="400" stroke="#F0F0F0" strokeDasharray="3" />
-                  <line x1="400" y1="0" x2="400" y2="400" stroke="#F0F0F0" strokeDasharray="3" />
-                  <line x1="0" y1="100" x2="500" y2="100" stroke="#F0F0F0" strokeDasharray="3" />
-                  <line x1="0" y1="200" x2="500" y2="200" stroke="#F0F0F0" strokeDasharray="3" />
-                  <line x1="0" y1="300" x2="500" y2="300" stroke="#F0F0F0" strokeDasharray="3" />
-
-                  {/* Harare (Top Right Region) */}
-                  <g
-                    onClick={() => setActiveBranchIdx(0)}
-                    onMouseEnter={() => setHoveredBranch('Harare')}
-                    onMouseLeave={() => setHoveredBranch(null)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <circle cx="330" cy="110" r={hoveredBranch === 'Harare' || activeBranchIdx === 0 ? 14 : 8} fill="#EB0A1E" opacity="0.3" style={{ transition: 'all 0.3s' }} />
-                    <circle cx="330" cy="110" r="6" fill="#EB0A1E" />
-                    <text x="345" y="115" fill="#1E1E1E" fontWeight="700" fontSize="12px">Harare (CFAO & Croco)</text>
-                  </g>
-
-                  {/* Bulawayo (Bottom Left Region) */}
-                  <g
-                    onClick={() => setActiveBranchIdx(1)}
-                    onMouseEnter={() => setHoveredBranch('Bulawayo')}
-                    onMouseLeave={() => setHoveredBranch(null)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <circle cx="150" cy="270" r={hoveredBranch === 'Bulawayo' || activeBranchIdx === 1 ? 14 : 8} fill="#EB0A1E" opacity="0.3" style={{ transition: 'all 0.3s' }} />
-                    <circle cx="150" cy="270" r="6" fill="#EB0A1E" />
-                    <text x="165" y="275" fill="#1E1E1E" fontWeight="700" fontSize="12px">Bulawayo (CFAO)</text>
-                  </g>
-
-                  {/* Masvingo (Bottom Right Region) */}
-                  <g
-                    onClick={() => setActiveBranchIdx(3)}
-                    onMouseEnter={() => setHoveredBranch('Masvingo')}
-                    onMouseLeave={() => setHoveredBranch(null)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <circle cx="280" cy="280" r={hoveredBranch === 'Masvingo' || activeBranchIdx === 3 ? 14 : 8} fill="#EB0A1E" opacity="0.3" style={{ transition: 'all 0.3s' }} />
-                    <circle cx="280" cy="280" r="6" fill="#EB0A1E" />
-                    <text x="295" y="285" fill="#1E1E1E" fontWeight="700" fontSize="12px">Masvingo (Byword)</text>
-                  </g>
+                  {/* Branch nodes */}
+                  {branchLocations.map((branch, idx) => {
+                    const { x, y } = branch.coordinates;
+                    const isActive = hoveredBranch === idx || activeBranchIdx === idx;
+                    const shortName = branch.name.split(' (')[0].replace('CFAO Toyota ', '').replace(' (Head Office)', '').replace('Croco Toyota ', 'Croco ').replace('Byword Motors', 'Masvingo').replace('Lowveld Toyota', 'Chiredzi');
+                    return (
+                      <g
+                        key={idx}
+                        onClick={() => setActiveBranchIdx(idx)}
+                        onMouseEnter={() => setHoveredBranch(idx)}
+                        onMouseLeave={() => setHoveredBranch(null)}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        <circle cx={x} cy={y} r={isActive ? 14 : 8} fill="#EB0A1E" opacity="0.25" style={{ transition: 'r 0.25s' }} />
+                        <circle cx={x} cy={y} r="5" fill="#EB0A1E" />
+                        <text x={x + 12} y={y + 4} fill="#1E1E1E" fontWeight="600" fontSize="11px">{shortName}</text>
+                      </g>
+                    );
+                  })}
                 </svg>
               </Box>
 
-              {/* Dynamic Overlay HUD indicating hovered node or selected branch */}
+              {/* HUD overlay */}
               <Box
                 sx={{
                   position: 'absolute',
@@ -173,10 +153,10 @@ export const Contact: React.FC = () => {
                   color: 'white',
                   p: 1.5,
                   fontSize: '0.8rem',
-                  borderLeft: '3px solid #EB0A1E'
+                  borderLeft: '3px solid #EB0A1E',
                 }}
               >
-                <Typography variant="caption" sx={{ color: '#AAAAAA', display: 'block' }}>SELECTED NODE</Typography>
+                <Typography variant="caption" sx={{ color: '#AAAAAA', display: 'block' }}>SELECTED BRANCH</Typography>
                 <Typography variant="body2" sx={{ fontWeight: 700 }}>
                   {branchLocations[activeBranchIdx].name.split(' (')[0]}
                 </Typography>
@@ -184,7 +164,7 @@ export const Contact: React.FC = () => {
             </Box>
           </Grid>
 
-          {/* Dealership Details Columns */}
+          {/* Dealership Details */}
           <Grid size={{ xs: 12, lg: 6 }}>
             <Typography variant="subtitle2" color="primary" sx={{ fontWeight: 800, letterSpacing: '2px', mb: 1 }}>
               LOCATIONS & DEPARTMENTS
@@ -203,17 +183,20 @@ export const Contact: React.FC = () => {
                 mb: 4,
                 '& .MuiTab-root': {
                   fontWeight: 700,
-                  fontSize: '0.85rem',
+                  fontSize: '0.78rem',
                   borderRadius: 0,
+                  minWidth: 80,
                 }
               }}
             >
               {branchLocations.map((loc, idx) => (
-                <Tab key={idx} label={loc.name.split(' ')[0] + ' ' + (loc.name.includes('CFAO') ? 'CFAO' : 'Dealer')} />
+                <Tab
+                  key={idx}
+                  label={loc.name.split(' (')[0].replace('CFAO Toyota ', '').replace('Croco Toyota ', 'Croco ').replace('Byword Motors', 'Byword').replace('Lowveld Toyota', 'Lowveld')}
+                />
               ))}
             </Tabs>
 
-            {/* Display Active Branch Details */}
             {branchLocations.map((branch, idx) => {
               if (idx !== activeBranchIdx) return null;
               return (

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography, Button, Divider, IconButton } from '@mui/material';
+import { Link } from 'react-router-dom';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -70,7 +71,7 @@ const vehicleToSaveable = (v: Vehicle) => ({
   features: v.features,
 });
 
-export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onViewDetails }) => {
+export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onViewDetails: _onViewDetails }) => {
   const { selectedVehicles, addToComparison, removeFromComparison } = useComparisonStore();
   const { toggleSaved, isSaved } = useSavedStore();
 
@@ -199,11 +200,12 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onViewDetails
 
         {/* Action Buttons */}
         <Box sx={{ display: 'flex', gap: 1.25, mt: 'auto' }}>
-          {/* DETAILS */}
+          {/* Details */}
           <Button
             variant="outlined"
             fullWidth
-            onClick={() => onViewDetails(vehicle)}
+            component={Link}
+            to={`/vehicles/${vehicle.id}`}
             startIcon={<InfoOutlinedIcon sx={{ fontSize: '1rem !important' }} />}
             sx={{
               fontWeight: 700,

@@ -17,6 +17,7 @@ import {
   ListItemText,
   Badge,
   Collapse,
+  Divider,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -26,42 +27,48 @@ import { useSavedStore } from '../../store/savedStore';
 import { SavedDrawer } from '../organisms/SavedDrawer';
 
 export const Header: React.FC = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [modelsAnchorEl, setModelsAnchorEl] = useState<null | HTMLElement>(null);
+  const [servicesAnchorEl, setServicesAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileModelsOpen, setMobileModelsOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [savedOpen, setSavedOpen] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
   const { savedListings } = useSavedStore();
 
-  const handleModelsClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const handleModelsClick = (event: React.MouseEvent<HTMLButtonElement>) => setModelsAnchorEl(event.currentTarget);
+  const handleModelsClose = () => setModelsAnchorEl(null);
 
-  const handleModelsClose = () => {
-    setAnchorEl(null);
-  };
+  const handleServicesClick = (event: React.MouseEvent<HTMLButtonElement>) => setServicesAnchorEl(event.currentTarget);
+  const handleServicesClose = () => setServicesAnchorEl(null);
 
   const handleCategorySelect = (category: string) => {
     handleModelsClose();
     navigate(`/vehicles?category=${category}`);
   };
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  const navItems = [
-    { label: 'Home', path: '/' },
-    { label: 'Models', path: '/vehicles', hasDropdown: true },
-    { label: 'Listings', path: '/listings' },
-    { label: 'Services', path: '/services' },
-    { label: 'About Us', path: '/about' },
-    { label: 'Contact Us', path: '/contact' },
-  ];
-
   const vehicleCategories = ['City', 'Sedan', 'SUV', '4x4', 'Pick-up', 'LCV'];
+
+  const isActive = (path: string) =>
+    location.pathname === path || (path !== '/' && location.pathname.startsWith(path));
+
+  const navButtonSx = (path: string) => ({
+    color: isActive(path) ? 'primary.main' : 'text.primary',
+    fontWeight: 600,
+    borderBottom: isActive(path) ? '3px solid #EB0A1E' : '3px solid transparent',
+    borderRadius: 0,
+    px: 1.5,
+    py: 2.5,
+    fontSize: '0.82rem',
+    whiteSpace: 'nowrap',
+    '&:hover': { color: 'primary.main', backgroundColor: 'transparent' },
+  });
+
+  const dropdownSx = {
+    '& .MuiPaper-root': { borderRadius: 0, mt: 0.5, minWidth: 200, boxShadow: '0 8px 24px rgba(0,0,0,0.12)' },
+  };
 
   return (
     <>
@@ -74,128 +81,95 @@ export const Header: React.FC = () => {
               component={Link}
               to="/"
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                fontWeight: 800,
-                textDecoration: 'none',
-                color: 'secondary.main',
-                gap: 1.5,
+                display: 'flex', alignItems: 'center', fontWeight: 800,
+                textDecoration: 'none', color: 'secondary.main', gap: 1.5,
               }}
             >
-              <Box
-                component="img"
-                src="/images/logo.png"
-                alt="Toyota Logo"
-                sx={{ height: 35, objectFit: 'contain' }}
-              />
-              <Typography
-                component="span"
-                variant="h6"
-                sx={{
-                  fontWeight: 900,
-                  color: 'secondary.main',
-                  letterSpacing: '1px',
-                  fontSize: '1.25rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1,
-                }}
-              >
+              <Box component="img" src="/images/logo.png" alt="Toyota Logo"
+                sx={{ height: 35, objectFit: 'contain' }} />
+              <Typography component="span" variant="h6"
+                sx={{ fontWeight: 900, color: 'secondary.main', letterSpacing: '1px', fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: 1 }}>
                 TOYOTA
-                <Box
-                  component="span"
-                  sx={{
-                    fontWeight: 600,
-                    color: 'text.secondary',
-                    fontSize: '0.8rem',
-                    letterSpacing: '1px',
-                    borderLeft: '1px solid #E0E0E0',
-                    pl: 1,
-                    display: { xs: 'none', sm: 'inline-block' },
-                  }}
-                >
+                <Box component="span"
+                  sx={{ fontWeight: 600, color: 'text.secondary', fontSize: '0.8rem', letterSpacing: '1px', borderLeft: '1px solid #E0E0E0', pl: 1, display: { xs: 'none', sm: 'inline-block' } }}>
                   ZIMBABWE
                 </Box>
               </Typography>
             </Typography>
 
             {/* Desktop Navigation */}
-            <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1 }}>
-              {navItems.map((item) => {
-                const isActive =
-                  location.pathname === item.path ||
-                  (item.path !== '/' && location.pathname.startsWith(item.path));
-                if (item.hasDropdown) {
-                  return (
-                    <Box key={item.label}>
-                      <Button
-                        aria-controls="models-menu"
-                        aria-haspopup="true"
-                        onClick={handleModelsClick}
-                        endIcon={<KeyboardArrowDownIcon />}
-                        sx={{
-                          color: isActive ? 'primary.main' : 'text.primary',
-                          fontWeight: 600,
-                          borderBottom: isActive ? '3px solid #EB0A1E' : '3px solid transparent',
-                          borderRadius: 0,
-                          px: 2,
-                          py: 2.5,
-                          '&:hover': { color: 'primary.main', backgroundColor: 'transparent' },
-                        }}
-                      >
-                        {item.label}
-                      </Button>
-                      <Menu
-                        id="models-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleModelsClose}
-                        elevation={3}
-                        sx={{
-                          '& .MuiPaper-root': { borderRadius: 0, mt: 0.5, minWidth: 180 },
-                        }}
-                      >
-                        <MenuItem
-                          onClick={() => { handleModelsClose(); navigate('/vehicles'); }}
-                          sx={{ fontWeight: 700 }}
-                        >
-                          All Models
-                        </MenuItem>
-                        {vehicleCategories.map((cat) => (
-                          <MenuItem key={cat} onClick={() => handleCategorySelect(cat)}>
-                            {cat} Lineup
-                          </MenuItem>
-                        ))}
-                      </Menu>
-                    </Box>
-                  );
-                }
+            <Box sx={{ display: { xs: 'none', lg: 'flex' }, alignItems: 'center', gap: 0 }}>
+              {/* Models dropdown */}
+              <Box>
+                <Button
+                  aria-controls="models-menu"
+                  aria-haspopup="true"
+                  onClick={handleModelsClick}
+                  endIcon={<KeyboardArrowDownIcon sx={{ fontSize: '1rem !important', transform: Boolean(modelsAnchorEl) ? 'rotate(180deg)' : 'none', transition: '0.2s' }} />}
+                  sx={navButtonSx('/vehicles')}
+                >
+                  Models
+                </Button>
+                <Menu id="models-menu" anchorEl={modelsAnchorEl} keepMounted
+                  open={Boolean(modelsAnchorEl)} onClose={handleModelsClose}
+                  elevation={3} sx={dropdownSx}>
+                  <MenuItem onClick={() => { handleModelsClose(); navigate('/vehicles'); }} sx={{ fontWeight: 700 }}>
+                    All Models
+                  </MenuItem>
+                  <Divider />
+                  {vehicleCategories.map(cat => (
+                    <MenuItem key={cat} onClick={() => handleCategorySelect(cat)}>
+                      {cat} Lineup
+                    </MenuItem>
+                  ))}
+                  <Divider />
+                  <MenuItem onClick={() => { handleModelsClose(); navigate('/listings'); }}>
+                    Pre-Owned Listings
+                  </MenuItem>
+                </Menu>
+              </Box>
 
-                return (
-                  <Button
-                    key={item.label}
-                    component={Link}
-                    to={item.path}
-                    sx={{
-                      color: isActive ? 'primary.main' : 'text.primary',
-                      fontWeight: 600,
-                      borderBottom: isActive ? '3px solid #EB0A1E' : '3px solid transparent',
-                      borderRadius: 0,
-                      px: 2,
-                      py: 2.5,
-                      '&:hover': { color: 'primary.main', backgroundColor: 'transparent' },
-                    }}
-                  >
-                    {item.label}
-                  </Button>
-                );
-              })}
+              <Button component={Link} to="/test-drive" sx={navButtonSx('/test-drive')}>Test Drive</Button>
+              <Button component={Link} to="/finance" sx={navButtonSx('/finance')}>Finance</Button>
+
+              {/* After Sales dropdown */}
+              <Box>
+                <Button
+                  aria-controls="services-menu"
+                  aria-haspopup="true"
+                  onClick={handleServicesClick}
+                  endIcon={<KeyboardArrowDownIcon sx={{ fontSize: '1rem !important', transform: Boolean(servicesAnchorEl) ? 'rotate(180deg)' : 'none', transition: '0.2s' }} />}
+                  sx={{
+                    ...navButtonSx('/services'),
+                    color: (isActive('/services') || isActive('/parts')) ? 'primary.main' : 'text.primary',
+                    borderBottom: (isActive('/services') || isActive('/parts')) ? '3px solid #EB0A1E' : '3px solid transparent',
+                  }}
+                >
+                  After Sales
+                </Button>
+                <Menu id="services-menu" anchorEl={servicesAnchorEl} keepMounted
+                  open={Boolean(servicesAnchorEl)} onClose={handleServicesClose}
+                  elevation={3} sx={dropdownSx}>
+                  <MenuItem onClick={() => { handleServicesClose(); navigate('/services'); }}>
+                    Workshop & Servicing
+                  </MenuItem>
+                  <MenuItem onClick={() => { handleServicesClose(); navigate('/parts'); }}>
+                    Spare Parts & Accessories
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem onClick={() => { handleServicesClose(); navigate('/promotions'); }}>
+                    Current Promotions
+                  </MenuItem>
+                </Menu>
+              </Box>
+
+              <Button component={Link} to="/news" sx={navButtonSx('/news')}>News</Button>
+              <Button component={Link} to="/contact" sx={navButtonSx('/contact')}>Contact</Button>
             </Box>
 
             {/* Right Actions */}
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              {/* Saved / Favourites Heart Icon */}
+              {/* Saved Heart */}
               <IconButton
                 onClick={() => setSavedOpen(true)}
                 aria-label="Saved vehicles"
@@ -207,14 +181,7 @@ export const Header: React.FC = () => {
               >
                 <Badge
                   badgeContent={savedListings.length}
-                  sx={{
-                    '& .MuiBadge-badge': {
-                      bgcolor: '#EB0A1E',
-                      color: '#fff',
-                      fontWeight: 800,
-                      fontSize: '0.65rem',
-                    },
-                  }}
+                  sx={{ '& .MuiBadge-badge': { bgcolor: '#EB0A1E', color: '#fff', fontWeight: 800, fontSize: '0.65rem' } }}
                 >
                   <FavoriteIcon sx={{ fontSize: 22 }} />
                 </Badge>
@@ -224,9 +191,8 @@ export const Header: React.FC = () => {
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ display: { md: 'none' }, color: 'text.primary' }}
+                onClick={() => setMobileOpen(true)}
+                sx={{ display: { lg: 'none' }, color: 'text.primary' }}
               >
                 <MenuIcon />
               </IconButton>
@@ -238,76 +204,121 @@ export const Header: React.FC = () => {
         <Drawer
           anchor="right"
           open={mobileOpen}
-          onClose={handleDrawerToggle}
+          onClose={() => setMobileOpen(false)}
           ModalProps={{ keepMounted: true }}
           sx={{
-            display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 280, borderRadius: 0 },
+            display: { xs: 'block', lg: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 300, borderRadius: 0 },
           }}
         >
-          <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant="h6" sx={{ fontWeight: 800 }}>
-              NAVIGATION
-            </Typography>
-            <IconButton onClick={handleDrawerToggle}>
-              <CloseIcon />
-            </IconButton>
+          <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #EAEAEA' }}>
+            <Typography variant="h6" sx={{ fontWeight: 800 }}>NAVIGATION</Typography>
+            <IconButton onClick={() => setMobileOpen(false)}><CloseIcon /></IconButton>
           </Box>
-          <List>
-            {navItems.map((item) => {
-              if (item.hasDropdown) {
-                return (
-                  <Box key={item.label}>
-                    <ListItem disablePadding>
-                      <ListItemButton onClick={() => setMobileModelsOpen(!mobileModelsOpen)}>
-                        <ListItemText
-                          primary={<Typography sx={{ fontWeight: 600 }}>{item.label}</Typography>}
-                        />
-                        <KeyboardArrowDownIcon
-                          sx={{
-                            transform: mobileModelsOpen ? 'rotate(180deg)' : 'none',
-                            transition: '0.2s',
-                          }}
-                        />
-                      </ListItemButton>
-                    </ListItem>
-                    <Collapse in={mobileModelsOpen} timeout="auto" unmountOnExit>
-                      <List component="div" disablePadding sx={{ pl: 3, bgcolor: '#fbfbfb' }}>
-                        <ListItemButton
-                          onClick={() => { handleDrawerToggle(); navigate('/vehicles'); }}
-                        >
-                          <ListItemText primary="All Models" />
-                        </ListItemButton>
-                        {vehicleCategories.map((cat) => (
-                          <ListItemButton
-                            key={cat}
-                            onClick={() => { handleDrawerToggle(); navigate(`/vehicles?category=${cat}`); }}
-                          >
-                            <ListItemText primary={`${cat} Lineup`} />
-                          </ListItemButton>
-                        ))}
-                      </List>
-                    </Collapse>
-                  </Box>
-                );
-              }
 
-              return (
-                <ListItem key={item.label} disablePadding>
-                  <ListItemButton
-                    component={Link}
-                    to={item.path}
-                    onClick={handleDrawerToggle}
-                    selected={location.pathname === item.path}
-                  >
-                    <ListItemText
-                      primary={<Typography sx={{ fontWeight: 600 }}>{item.label}</Typography>}
-                    />
+          <List sx={{ pt: 0 }}>
+            {/* Home */}
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/" onClick={() => setMobileOpen(false)} selected={location.pathname === '/'}>
+                <ListItemText primary={<Typography sx={{ fontWeight: 600 }}>Home</Typography>} />
+              </ListItemButton>
+            </ListItem>
+
+            {/* Models accordion */}
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => setMobileModelsOpen(!mobileModelsOpen)}>
+                <ListItemText primary={<Typography sx={{ fontWeight: 600 }}>Models</Typography>} />
+                <KeyboardArrowDownIcon sx={{ transform: mobileModelsOpen ? 'rotate(180deg)' : 'none', transition: '0.2s' }} />
+              </ListItemButton>
+            </ListItem>
+            <Collapse in={mobileModelsOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding sx={{ pl: 3, bgcolor: '#FAFAFA' }}>
+                <ListItemButton onClick={() => { setMobileOpen(false); navigate('/vehicles'); }}>
+                  <ListItemText primary="All Models" />
+                </ListItemButton>
+                {vehicleCategories.map(cat => (
+                  <ListItemButton key={cat} onClick={() => { setMobileOpen(false); navigate(`/vehicles?category=${cat}`); }}>
+                    <ListItemText primary={`${cat} Lineup`} />
                   </ListItemButton>
-                </ListItem>
-              );
-            })}
+                ))}
+              </List>
+            </Collapse>
+
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/listings" onClick={() => setMobileOpen(false)} selected={location.pathname === '/listings'}>
+                <ListItemText primary={<Typography sx={{ fontWeight: 600 }}>Listings</Typography>} />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/test-drive" onClick={() => setMobileOpen(false)} selected={location.pathname === '/test-drive'}>
+                <ListItemText primary={<Typography sx={{ fontWeight: 600 }}>Book a Test Drive</Typography>} />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/promotions" onClick={() => setMobileOpen(false)} selected={location.pathname === '/promotions'}>
+                <ListItemText primary={<Typography sx={{ fontWeight: 600 }}>Promotions</Typography>} />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/finance" onClick={() => setMobileOpen(false)} selected={location.pathname === '/finance'}>
+                <ListItemText primary={<Typography sx={{ fontWeight: 600 }}>Vehicle Finance</Typography>} />
+              </ListItemButton>
+            </ListItem>
+
+            {/* After Sales accordion */}
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => setMobileServicesOpen(!mobileServicesOpen)}>
+                <ListItemText primary={<Typography sx={{ fontWeight: 600 }}>After Sales</Typography>} />
+                <KeyboardArrowDownIcon sx={{ transform: mobileServicesOpen ? 'rotate(180deg)' : 'none', transition: '0.2s' }} />
+              </ListItemButton>
+            </ListItem>
+            <Collapse in={mobileServicesOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding sx={{ pl: 3, bgcolor: '#FAFAFA' }}>
+                <ListItemButton onClick={() => { setMobileOpen(false); navigate('/services'); }}>
+                  <ListItemText primary="Workshop & Servicing" />
+                </ListItemButton>
+                <ListItemButton onClick={() => { setMobileOpen(false); navigate('/parts'); }}>
+                  <ListItemText primary="Spare Parts & Accessories" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/news" onClick={() => setMobileOpen(false)} selected={location.pathname === '/news'}>
+                <ListItemText primary={<Typography sx={{ fontWeight: 600 }}>News & Media</Typography>} />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/about" onClick={() => setMobileOpen(false)} selected={location.pathname === '/about'}>
+                <ListItemText primary={<Typography sx={{ fontWeight: 600 }}>About Us</Typography>} />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/contact" onClick={() => setMobileOpen(false)} selected={location.pathname === '/contact'}>
+                <ListItemText primary={<Typography sx={{ fontWeight: 600 }}>Contact Us</Typography>} />
+              </ListItemButton>
+            </ListItem>
           </List>
+
+          {/* Mobile CTA */}
+          <Box sx={{ p: 2, borderTop: '1px solid #EAEAEA', mt: 'auto' }}>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              component={Link}
+              to="/test-drive"
+              onClick={() => setMobileOpen(false)}
+              sx={{ fontWeight: 700, textTransform: 'none', py: 1.25 }}
+            >
+              Book a Test Drive
+            </Button>
+          </Box>
         </Drawer>
       </AppBar>
 

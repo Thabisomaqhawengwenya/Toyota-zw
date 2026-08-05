@@ -111,7 +111,7 @@ export const Services: React.FC = () => {
       {/* Banner */}
       <Box
         sx={{
-          backgroundImage: 'linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.7) 100%), url(/images/services-banner.jpg)',
+          backgroundImage: 'linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.7) 100%), url(/images/Toyota_Fortuner.jpeg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           color: 'white',
@@ -133,7 +133,7 @@ export const Services: React.FC = () => {
       </Box>
 
       <Container maxWidth="xl" sx={{ py: 10 }}>
-        <Grid container spacing={8}>
+        <Grid container spacing={8} sx={{ alignItems: 'flex-start' }}>
           {/* Services Offered List */}
           <Grid size={{ xs: 12, lg: 7 }}>
             <Typography variant="subtitle2" color="primary" sx={{ fontWeight: 800, letterSpacing: '2px', mb: 1 }}>
@@ -164,7 +164,7 @@ export const Services: React.FC = () => {
 
           {/* Service Booking Form */}
           <Grid size={{ xs: 12, lg: 5 }}>
-            <Box sx={{ bgcolor: 'background.paper', p: { xs: 4, md: 5 }, border: '1px solid #EAEAEA' }}>
+            <Box sx={{ bgcolor: 'background.paper', p: { xs: 4, md: 5 }, border: '1px solid #EAEAEA', mt: { lg: '80px' } }}>
               <Typography variant="h4" sx={{ fontWeight: 900, mb: 1 }}>
                 BOOK A SERVICE
               </Typography>
@@ -264,6 +264,7 @@ export const Services: React.FC = () => {
                       <MenuItem value="Parts Install">Genuine Parts Installation</MenuItem>
                       <MenuItem value="Warranty Check">Manufacturer Warranty Diagnostics</MenuItem>
                       <MenuItem value="Heavy Repair">Engine, Gearbox or Suspension Repair</MenuItem>
+                      <MenuItem value="Fleet Care">Corporate & Mining Fleet Care</MenuItem>
                     </Select>
                     {errors.serviceType && <FormHelperText>{errors.serviceType}</FormHelperText>}
                   </FormControl>
