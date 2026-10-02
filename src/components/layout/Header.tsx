@@ -106,7 +106,7 @@ export const Header: React.FC = () => {
                   aria-haspopup="true"
                   aria-expanded={Boolean(modelsAnchorEl)}
                   onClick={handleModelsClick}
-                  endIcon={<KeyboardArrowDownIcon sx={{ fontSize: '1rem !important', transform: Boolean(modelsAnchorEl) ? 'rotate(180deg)' : 'none', transition: '0.2s' }} />}
+                  endIcon={<KeyboardArrowDownIcon sx={{ fontSize: '1rem !important', transform: modelsAnchorEl ? 'rotate(180deg)' : 'none', transition: '0.2s' }} />}
                   sx={navButtonSx('/vehicles')}
                 >
                   Models
@@ -140,7 +140,7 @@ export const Header: React.FC = () => {
                   aria-haspopup="true"
                   aria-expanded={Boolean(servicesAnchorEl)}
                   onClick={handleServicesClick}
-                  endIcon={<KeyboardArrowDownIcon sx={{ fontSize: '1rem !important', transform: Boolean(servicesAnchorEl) ? 'rotate(180deg)' : 'none', transition: '0.2s' }} />}
+                  endIcon={<KeyboardArrowDownIcon sx={{ fontSize: '1rem !important', transform: servicesAnchorEl ? 'rotate(180deg)' : 'none', transition: '0.2s' }} />}
                   sx={{
                     ...navButtonSx('/services'),
                     color: (isActive('/services') || isActive('/parts')) ? 'primary.main' : 'text.primary',

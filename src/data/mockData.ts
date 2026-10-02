@@ -156,6 +156,32 @@ export const mockVehicles: Vehicle[] = [
     powerHp: '128 Hp',
     description: 'The ultimate mass transportation utility vehicle for harsh bush tracks. Famous for NGO operations, search and rescue, and overland expeditions.',
     features: ['13-Seat Passenger Configuration', 'Dual Fuel Tanks (180L Total)', 'Heavy Duty Coil/Leaf Suspension', 'Snorkel', 'Rear Step Bumper']
+  },
+  {
+    id: 'fortuner',
+    modelName: 'Toyota Fortuner',
+    category: 'SUV',
+    imageUrl: '/images/Toyota_Fortuner.jpeg',
+    priceRange: '$52,000 - $68,000',
+    fuelType: 'Diesel',
+    transmission: 'Automatic',
+    engineCc: '2755 cc',
+    powerHp: '201 Hp',
+    description: 'Premium 7-seater adventure SUV with legendary off-road heritage. Combines refined family luxury with genuine 4WD performance on Zimbabwean roads.',
+    features: ['7-Seat Leather Interior', 'Part-time 4WD with Rear Diff Lock', 'Downhill Assist Control', '8-inch Touchscreen Infotainment', 'Bi-Beam LED Headlamps']
+  },
+  {
+    id: 'hiace',
+    modelName: 'Toyota Hiace Ses\'fikile',
+    category: 'LCV',
+    imageUrl: '/images/Toyota_Hiace.jpeg',
+    priceRange: '$39,500 - $49,000',
+    fuelType: 'Diesel',
+    transmission: 'Manual',
+    engineCc: '2755 cc',
+    powerHp: '134 Hp',
+    description: 'The ultimate people-mover and commercial workhorse. Highly trusted across Zimbabwe for commuter transport, shuttle fleets, and executive passenger operations.',
+    features: ['16-Seater Commuter Layout', 'Rear Air Conditioning Vents', 'Anti-lock Braking System (ABS)', 'Sliding Passenger Door', 'High-Rigidity Body Structure']
   }
 ];
 
