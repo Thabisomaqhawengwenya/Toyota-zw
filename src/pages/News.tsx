@@ -120,9 +120,9 @@ export const News: React.FC = () => {
       <Box
         sx={{
           position: 'relative',
-          backgroundImage: 'linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.88) 100%), url(https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1920&q=80)',
+          backgroundImage: 'linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.85) 100%), url(/images/Toyota_Land_Cruiser_79_Pickup.jpg)',
           backgroundSize: 'cover',
-          backgroundPosition: 'center 42%',
+          backgroundPosition: 'center 40%',
           color: 'white',
           py: { xs: 8, md: 12 },
           textAlign: 'center',
