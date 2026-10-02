@@ -119,12 +119,15 @@ export const News: React.FC = () => {
       {/* ── Visual Banner ─────────────────────────────────────────────────── */}
       <Box
         sx={{
-          bgcolor: '#1E1E1E',
+          position: 'relative',
+          backgroundImage: 'linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.88) 100%), url(https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1920&q=80)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 42%',
           color: 'white',
-          py: { xs: 7, md: 10 },
+          py: { xs: 8, md: 12 },
           textAlign: 'center',
           borderBottom: '4px solid #EB0A1E',
-          position: 'relative',
+          px: 2,
         }}
       >
         <Container maxWidth="md">
@@ -134,10 +137,10 @@ export const News: React.FC = () => {
               ZIMBABWE AUTOMOTIVE DESK
             </Typography>
           </Box>
-          <Typography variant="h2" sx={{ fontWeight: 900, mb: 2, fontSize: { xs: '2rem', md: '3.5rem' } }}>
+          <Typography variant="h2" sx={{ fontWeight: 900, mb: 2, fontSize: { xs: '2rem', md: '3.5rem' }, textShadow: '0 2px 14px rgba(0,0,0,0.65)' }}>
             TOYOTA ZIMBABWE NEWS
           </Typography>
-          <Typography variant="body1" sx={{ color: '#CCCCCC', fontSize: '1.05rem', lineHeight: 1.7, maxWidth: 620, mx: 'auto' }}>
+          <Typography variant="body1" sx={{ color: '#E0E0E0', fontSize: '1.05rem', lineHeight: 1.7, maxWidth: 620, mx: 'auto', textShadow: '0 1px 8px rgba(0,0,0,0.7)' }}>
             Live updates on new Toyota launches, CFAO Mobility Zimbabwe announcements, mining and corporate fleet deliveries, and national sports partnerships.
           </Typography>
         </Container>
