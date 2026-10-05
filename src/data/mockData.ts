@@ -220,67 +220,93 @@ export const mockServices: ServiceItem[] = [
 
 export const branchLocations = [
   {
+    id: 'cfao-harare',
     name: 'CFAO Toyota Harare (Head Office)',
+    city: 'Harare',
     address: '59-61 Coventry Road, Workington, Harare',
     phone: '+263 (24) 2750031 / 9',
     email: 'sales.harare@cfao.com',
     hours: 'Mon - Fri: 8:00 AM - 5:00 PM | Sat: 8:00 AM - 12:00 PM',
-    coordinates: { x: 330, y: 110 }
+    coordinates: { x: 330, y: 110, lat: -17.8488, lng: 31.0264 }
   },
   {
+    id: 'croco-harare',
+    name: 'Croco Toyota Harare',
+    city: 'Harare',
+    address: '100 Seke Road, Graniteside, Harare',
+    phone: '+263 (24) 2772591',
+    email: 'sales.croco@croco.co.zw',
+    hours: 'Mon - Fri: 8:00 AM - 5:00 PM | Sat: 8:00 AM - 1:00 PM',
+    coordinates: { x: 345, y: 125, lat: -17.8576, lng: 31.0601 }
+  },
+  {
+    id: 'cfao-bulawayo',
     name: 'CFAO Toyota Bulawayo',
+    city: 'Bulawayo',
     address: 'Corner 12th Avenue & Fife Street, Bulawayo',
     phone: '+263 (29) 2262521 / 5',
     email: 'sales.bulawayo@cfao.com',
     hours: 'Mon - Fri: 8:00 AM - 5:00 PM | Sat: 8:00 AM - 12:00 PM',
-    coordinates: { x: 150, y: 270 }
+    coordinates: { x: 150, y: 270, lat: -20.1585, lng: 28.5833 }
   },
   {
-    name: 'Croco Toyota Harare',
-    address: '100 Seke Road, Harare',
-    phone: '+263 (24) 2772591',
-    email: 'sales.croco@croco.co.zw',
-    hours: 'Mon - Fri: 8:00 AM - 5:00 PM | Sat: 8:00 AM - 1:00 PM',
-    coordinates: { x: 345, y: 125 }
-  },
-  {
+    id: 'byword-masvingo',
     name: 'Byword Motors (Masvingo Authorized Dealer)',
+    city: 'Masvingo',
     address: '67 Hughes Street, Masvingo',
     phone: '+263 (39) 2262704',
     email: 'service.masvingo@byword.co.zw',
     hours: 'Mon - Fri: 8:00 AM - 5:00 PM',
-    coordinates: { x: 280, y: 280 }
+    coordinates: { x: 280, y: 280, lat: -20.0734, lng: 30.8285 }
   },
   {
+    id: 'cfao-mutare',
     name: 'CFAO Toyota Mutare',
+    city: 'Mutare',
     address: '15 Herbert Chitepo Street, Mutare',
     phone: '+263 (20) 2061234 / 5',
     email: 'sales.mutare@cfao.com',
     hours: 'Mon - Fri: 8:00 AM - 5:00 PM | Sat: 8:00 AM - 12:00 PM',
-    coordinates: { x: 420, y: 155 }
+    coordinates: { x: 420, y: 155, lat: -18.9744, lng: 32.6685 }
   },
   {
+    id: 'cfao-gweru',
     name: 'CFAO Toyota Gweru',
+    city: 'Gweru',
     address: '18 Robert Mugabe Way, Gweru',
     phone: '+263 (54) 2221456',
     email: 'sales.gweru@cfao.com',
     hours: 'Mon - Fri: 8:00 AM - 5:00 PM | Sat: 8:00 AM - 12:00 PM',
-    coordinates: { x: 220, y: 195 }
+    coordinates: { x: 220, y: 195, lat: -19.4589, lng: 29.8153 }
   },
   {
+    id: 'cfao-kadoma',
     name: 'CFAO Toyota Kadoma',
+    city: 'Kadoma',
     address: '5 Fourth Street, Kadoma',
     phone: '+263 (68) 2422150',
     email: 'sales.kadoma@cfao.com',
     hours: 'Mon - Fri: 8:00 AM - 5:00 PM',
-    coordinates: { x: 255, y: 155 }
+    coordinates: { x: 255, y: 155, lat: -18.3333, lng: 29.9167 }
   },
   {
+    id: 'lowveld-chiredzi',
     name: 'Lowveld Toyota (Chiredzi Authorized Dealer)',
+    city: 'Chiredzi',
     address: '32 Guava Road, Chiredzi',
     phone: '+263 (31) 2722801',
     email: 'sales.chiredzi@lowveld.co.zw',
     hours: 'Mon - Fri: 8:00 AM - 5:00 PM',
-    coordinates: { x: 340, y: 330 }
+    coordinates: { x: 340, y: 330, lat: -21.0500, lng: 31.6667 }
+  },
+  {
+    id: 'croco-vicfalls',
+    name: 'Croco Toyota Victoria Falls',
+    city: 'Victoria Falls',
+    address: 'Stand 433, Kazungula Road, Victoria Falls',
+    phone: '+263 (83) 2844222',
+    email: 'sales.vicfalls@croco.co.zw',
+    hours: 'Mon - Fri: 8:00 AM - 5:00 PM',
+    coordinates: { x: 75, y: 140, lat: -17.9333, lng: 25.8333 }
   }
 ];

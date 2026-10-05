@@ -130,33 +130,15 @@ export const Contact: React.FC = () => {
             {mapViewMode === 'live' ? (
               <Box sx={{ position: 'relative' }}>
                 <ResponsiveMap
-                  searchQuery={`${branchLocations[activeBranchIdx].name}, ${branchLocations[activeBranchIdx].address}`}
+                  selectedBranchId={branchLocations[activeBranchIdx].id}
                   title={branchLocations[activeBranchIdx].name}
                   minHeight={420}
                   aspectRatio="4 / 3"
-                />
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    bottom: 14,
-                    left: 14,
-                    bgcolor: 'rgba(0,0,0,0.85)',
-                    color: 'white',
-                    p: 1.5,
-                    fontSize: '0.8rem',
-                    borderLeft: '3px solid #EB0A1E',
-                    zIndex: 3,
-                    pointerEvents: 'none',
-                    backdropFilter: 'blur(4px)',
+                  onSelectBranch={(b) => {
+                    const newIdx = branchLocations.findIndex(loc => loc.id === b.id);
+                    if (newIdx !== -1) setActiveBranchIdx(newIdx);
                   }}
-                >
-                  <Typography variant="caption" sx={{ color: '#AAAAAA', display: 'block', letterSpacing: '1px' }}>
-                    SELECTED BRANCH
-                  </Typography>
-                  <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                    {branchLocations[activeBranchIdx].name.split(' (')[0]}
-                  </Typography>
-                </Box>
+                />
               </Box>
             ) : (
               <Box
