@@ -4,8 +4,12 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EmailIcon from '@mui/icons-material/Email';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import MapIcon from '@mui/icons-material/Map';
+import PublicIcon from '@mui/icons-material/Public';
+import DirectionsIcon from '@mui/icons-material/Directions';
 
 import { branchLocations } from '../data/mockData';
+import { ResponsiveMap } from '../components/ResponsiveMap';
 
 export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +23,7 @@ export const Contact: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [hoveredBranch, setHoveredBranch] = useState<number | null>(null);
   const [activeBranchIdx, setActiveBranchIdx] = useState<number>(0);
+  const [mapViewMode, setMapViewMode] = useState<'live' | 'network'>('live');
 
   const validateForm = () => {
     const tempErrors: Record<string, string> = {};
@@ -83,85 +88,150 @@ export const Contact: React.FC = () => {
         <Grid container spacing={8} sx={{ mb: 10 }}>
           {/* Interactive Map of Zimbabwe */}
           <Grid size={{ xs: 12, lg: 6 }}>
-            <Typography variant="subtitle2" color="primary" sx={{ fontWeight: 800, letterSpacing: '2px', mb: 1 }}>
-              NETWORK COVERAGE
-            </Typography>
-            <Typography variant="h3" sx={{ fontWeight: 900, mb: 2 }}>
-              INTERACTIVE DEALER MAP
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
-              Click or hover on any location dot to view branch details. We now have {branchLocations.length} locations across Zimbabwe.
-            </Typography>
-
-            <Box
-              sx={{
-                bgcolor: 'background.paper',
-                border: '1px solid #EAEAEA',
-                p: { xs: 2, md: 4 },
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                position: 'relative',
-              }}
-            >
-              <Box sx={{ width: '100%', maxWidth: 450 }}>
-                <svg viewBox="0 0 500 400" width="100%" height="100%" style={{ background: '#F9F9F9' }}>
-                  {/* Stylized Zimbabwe boundary */}
-                  <path
-                    d="M 220 50 C 270 50, 310 30, 350 70 C 400 120, 420 160, 450 180 C 470 200, 450 250, 430 280 C 410 310, 350 350, 300 370 C 250 380, 200 360, 150 330 C 100 300, 60 270, 50 220 C 40 180, 80 140, 110 110 C 140 80, 170 50, 220 50 Z"
-                    fill="#E0E0E0"
-                    stroke="#B0B0B0"
-                    strokeWidth="2"
-                  />
-                  {/* Grid lines */}
-                  {[100, 200, 300, 400].map(x => (
-                    <line key={`vl${x}`} x1={x} y1="0" x2={x} y2="400" stroke="#F0F0F0" strokeDasharray="3" />
-                  ))}
-                  {[100, 200, 300].map(y => (
-                    <line key={`hl${y}`} x1="0" y1={y} x2="500" y2={y} stroke="#F0F0F0" strokeDasharray="3" />
-                  ))}
-
-                  {/* Branch nodes */}
-                  {branchLocations.map((branch, idx) => {
-                    const { x, y } = branch.coordinates;
-                    const isActive = hoveredBranch === idx || activeBranchIdx === idx;
-                    const shortName = branch.name.split(' (')[0].replace('CFAO Toyota ', '').replace(' (Head Office)', '').replace('Croco Toyota ', 'Croco ').replace('Byword Motors', 'Masvingo').replace('Lowveld Toyota', 'Chiredzi');
-                    return (
-                      <g
-                        key={idx}
-                        onClick={() => setActiveBranchIdx(idx)}
-                        onMouseEnter={() => setHoveredBranch(idx)}
-                        onMouseLeave={() => setHoveredBranch(null)}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        <circle cx={x} cy={y} r={isActive ? 14 : 8} fill="#EB0A1E" opacity="0.25" style={{ transition: 'r 0.25s' }} />
-                        <circle cx={x} cy={y} r="5" fill="#EB0A1E" />
-                        <text x={x + 12} y={y + 4} fill="#1E1E1E" fontWeight="600" fontSize="11px">{shortName}</text>
-                      </g>
-                    );
-                  })}
-                </svg>
-              </Box>
-
-              {/* HUD overlay */}
-              <Box
-                sx={{
-                  position: 'absolute',
-                  bottom: 12,
-                  left: 12,
-                  bgcolor: 'rgba(0,0,0,0.85)',
-                  color: 'white',
-                  p: 1.5,
-                  fontSize: '0.8rem',
-                  borderLeft: '3px solid #EB0A1E',
-                }}
-              >
-                <Typography variant="caption" sx={{ color: '#AAAAAA', display: 'block' }}>SELECTED BRANCH</Typography>
-                <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                  {branchLocations[activeBranchIdx].name.split(' (')[0]}
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2, flexWrap: 'wrap', gap: 2 }}>
+              <Box>
+                <Typography variant="subtitle2" color="primary" sx={{ fontWeight: 800, letterSpacing: '2px', mb: 1 }}>
+                  NETWORK COVERAGE
+                </Typography>
+                <Typography variant="h3" sx={{ fontWeight: 900 }}>
+                  INTERACTIVE DEALER MAP
                 </Typography>
               </Box>
+              <Stack direction="row" spacing={1} sx={{ mt: { xs: 1, sm: 0 } }}>
+                <Button
+                  size="small"
+                  variant={mapViewMode === 'live' ? 'contained' : 'outlined'}
+                  color="secondary"
+                  onClick={() => setMapViewMode('live')}
+                  startIcon={<MapIcon />}
+                  sx={{ fontSize: '0.72rem', py: 0.8, px: 1.5 }}
+                >
+                  Live Map
+                </Button>
+                <Button
+                  size="small"
+                  variant={mapViewMode === 'network' ? 'contained' : 'outlined'}
+                  color="secondary"
+                  onClick={() => setMapViewMode('network')}
+                  startIcon={<PublicIcon />}
+                  sx={{ fontSize: '0.72rem', py: 0.8, px: 1.5 }}
+                >
+                  Network Radar
+                </Button>
+              </Stack>
             </Box>
+
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+              {mapViewMode === 'live'
+                ? `Showing live interactive map for ${branchLocations[activeBranchIdx].name}. Select different dealerships on the right to navigate.`
+                : `Click or hover on any location dot to view branch details. We now have ${branchLocations.length} locations across Zimbabwe.`}
+            </Typography>
+
+            {mapViewMode === 'live' ? (
+              <Box sx={{ position: 'relative' }}>
+                <ResponsiveMap
+                  searchQuery={`${branchLocations[activeBranchIdx].name}, ${branchLocations[activeBranchIdx].address}`}
+                  title={branchLocations[activeBranchIdx].name}
+                  minHeight={420}
+                  aspectRatio="4 / 3"
+                />
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    bottom: 14,
+                    left: 14,
+                    bgcolor: 'rgba(0,0,0,0.85)',
+                    color: 'white',
+                    p: 1.5,
+                    fontSize: '0.8rem',
+                    borderLeft: '3px solid #EB0A1E',
+                    zIndex: 3,
+                    pointerEvents: 'none',
+                    backdropFilter: 'blur(4px)',
+                  }}
+                >
+                  <Typography variant="caption" sx={{ color: '#AAAAAA', display: 'block', letterSpacing: '1px' }}>
+                    SELECTED BRANCH
+                  </Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                    {branchLocations[activeBranchIdx].name.split(' (')[0]}
+                  </Typography>
+                </Box>
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  bgcolor: 'background.paper',
+                  border: '1px solid #EAEAEA',
+                  p: { xs: 2, md: 4 },
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  position: 'relative',
+                  minHeight: 420,
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 20px -2px rgba(0, 0, 0, 0.08)',
+                }}
+              >
+                <Box sx={{ width: '100%', maxWidth: 450 }}>
+                  <svg viewBox="0 0 500 400" width="100%" height="100%" style={{ background: '#F9F9F9' }}>
+                    {/* Stylized Zimbabwe boundary */}
+                    <path
+                      d="M 220 50 C 270 50, 310 30, 350 70 C 400 120, 420 160, 450 180 C 470 200, 450 250, 430 280 C 410 310, 350 350, 300 370 C 250 380, 200 360, 150 330 C 100 300, 60 270, 50 220 C 40 180, 80 140, 110 110 C 140 80, 170 50, 220 50 Z"
+                      fill="#E0E0E0"
+                      stroke="#B0B0B0"
+                      strokeWidth="2"
+                    />
+                    {/* Grid lines */}
+                    {[100, 200, 300, 400].map(x => (
+                      <line key={`vl${x}`} x1={x} y1="0" x2={x} y2="400" stroke="#F0F0F0" strokeDasharray="3" />
+                    ))}
+                    {[100, 200, 300].map(y => (
+                      <line key={`hl${y}`} x1="0" y1={y} x2="500" y2={y} stroke="#F0F0F0" strokeDasharray="3" />
+                    ))}
+
+                    {/* Branch nodes */}
+                    {branchLocations.map((branch, idx) => {
+                      const { x, y } = branch.coordinates;
+                      const isActive = hoveredBranch === idx || activeBranchIdx === idx;
+                      const shortName = branch.name.split(' (')[0].replace('CFAO Toyota ', '').replace(' (Head Office)', '').replace('Croco Toyota ', 'Croco ').replace('Byword Motors', 'Masvingo').replace('Lowveld Toyota', 'Chiredzi');
+                      return (
+                        <g
+                          key={idx}
+                          onClick={() => setActiveBranchIdx(idx)}
+                          onMouseEnter={() => setHoveredBranch(idx)}
+                          onMouseLeave={() => setHoveredBranch(null)}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <circle cx={x} cy={y} r={isActive ? 14 : 8} fill="#EB0A1E" opacity="0.25" style={{ transition: 'r 0.25s' }} />
+                          <circle cx={x} cy={y} r="5" fill="#EB0A1E" />
+                          <text x={x + 12} y={y + 4} fill="#1E1E1E" fontWeight="600" fontSize="11px">{shortName}</text>
+                        </g>
+                      );
+                    })}
+                  </svg>
+                </Box>
+
+                {/* HUD overlay */}
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    bottom: 12,
+                    left: 12,
+                    bgcolor: 'rgba(0,0,0,0.85)',
+                    color: 'white',
+                    p: 1.5,
+                    fontSize: '0.8rem',
+                    borderLeft: '3px solid #EB0A1E',
+                  }}
+                >
+                  <Typography variant="caption" sx={{ color: '#AAAAAA', display: 'block' }}>SELECTED BRANCH</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                    {branchLocations[activeBranchIdx].name.split(' (')[0]}
+                  </Typography>
+                </Box>
+              </Box>
+            )}
           </Grid>
 
           {/* Dealership Details */}
@@ -200,7 +270,7 @@ export const Contact: React.FC = () => {
             {branchLocations.map((branch, idx) => {
               if (idx !== activeBranchIdx) return null;
               return (
-                <Box key={idx} sx={{ bgcolor: 'background.paper', p: 4, border: '1px solid #EAEAEA' }}>
+                <Box key={idx} sx={{ bgcolor: 'background.paper', p: 4, border: '1px solid #EAEAEA', borderRadius: '8px', boxShadow: '0 4px 20px -2px rgba(0, 0, 0, 0.05)' }}>
                   <Typography variant="h5" sx={{ fontWeight: 900, mb: 3 }}>
                     {branch.name}
                   </Typography>
@@ -238,6 +308,19 @@ export const Contact: React.FC = () => {
                       </Box>
                     </Box>
                   </Stack>
+
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<DirectionsIcon />}
+                    component="a"
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${branch.name} ${branch.address}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{ mt: 3 }}
+                  >
+                    Open in Google Maps
+                  </Button>
                 </Box>
               );
             })}
